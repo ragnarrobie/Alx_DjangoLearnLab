@@ -1,13 +1,19 @@
 # Update Operation
 
 from bookshelf.models import Book
-b = Book.objects.get(pk=1)
-b.title = "Nineteen Eighty-Four"
-b.save()
 
-# verify
+# Retrieve the book
 
-Book.objects.get(pk=1).title
+book = Book.objects.get(pk=1)
+
+# Update the title
+
+book.title = "Nineteen Eighty-Four"
+book.save()
+
+# Verify the update
+
+book.title
 
 # Expected output:
 
