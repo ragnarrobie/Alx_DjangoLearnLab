@@ -1,14 +1,20 @@
 # Delete Operation
 
 from bookshelf.models import Book
-b = Book.objects.get(pk=1)
-b.delete()
 
-# Expected delete output (example):
+# Retrieve the book
+
+book = Book.objects.get(pk=1)
+
+# Delete the book
+
+book.delete()
+
+# Expected output (example):
 
 # (1, {'bookshelf.Book': 1})
 
-# confirm deletion
+# Confirm deletion
 
 Book.objects.all()
 
