@@ -17,14 +17,16 @@ except Author.DoesNotExist:
 
 print("\n" + "-"*40 + "\n")
 library_name = "Central Library"
+# Retrieve the librarian for a library
 try:
-    library = Library.objects.get(Library=library_name)
-    books_in_library = library.books.all()
-    print(f"Books in {library_name}:")
-    for book in books_in_library:
-        print(f"- {book.title} (by {book.author.Library})")
+    library = Library.objects.get(name=library_name)
+    librarian = Librarian.objects.get(library=library)  # <- This line
+    print(f"Librarian of {library_name}: {librarian.name}")
 except Library.DoesNotExist:
     print(f"No library found with the name {library_name}")
+except Librarian.DoesNotExist:
+    print(f"No librarian assigned to {library_name}")
+
 
 print("\n" + "-"*40 + "\n")
 try:
