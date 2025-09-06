@@ -18,11 +18,11 @@ except Author.DoesNotExist:
 print("\n" + "-"*40 + "\n")
 library_name = "Central Library"
 try:
-    library = Library.objects.get(name=library_name)
+    library = Library.objects.get(Library=library_name)
     books_in_library = library.books.all()
     print(f"Books in {library_name}:")
     for book in books_in_library:
-        print(f"- {book.title} (by {book.author.name})")
+        print(f"- {book.title} (by {book.author.Library})")
 except Library.DoesNotExist:
     print(f"No library found with the name {library_name}")
 
