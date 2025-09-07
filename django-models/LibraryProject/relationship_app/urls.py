@@ -12,8 +12,6 @@ urlpatterns = [
     path('register/',views.register,name="register"),
     path('',views.list_books,name="list_books"),
     path('',views.LibraryDetailView.as_view(),name="Library_detail"),
-    path('books/', views.list_books, name='list_books'),
-    path('books/add/', views.add_book, name='add_book'),
-    path('books/<int:pk>/edit/', views.edit_book, name='edit_book'),
-    path('books/<int:pk>/delete/', views.delete_book, name='delete_book'),
+    path('add_book/', views.add_book, name='add_book'),
+    path('edit_book/<int:pk>/', views.edit_book, name='edit_book'),
 ]
