@@ -75,3 +75,17 @@ def book_create(request):
     else:
         form = BookForm()
     return render(request, 'bookshelf/form_example.html', {'form': form})
+# Example view to demonstrate ExampleForm usage
+def example_form_view(request):
+    if request.method == 'POST':
+        form = ExampleForm(request.POST)
+        if form.is_valid():
+            # Normally process data here
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            message = form.cleaned_data['message']
+            # For demo, just redirect or render a success template
+            return render(request, 'bookshelf/form_success.html', {'name': name})
+    else:
+        form = ExampleForm()
+    return render(request, 'bookshelf/form_example.html', {'form': form})
