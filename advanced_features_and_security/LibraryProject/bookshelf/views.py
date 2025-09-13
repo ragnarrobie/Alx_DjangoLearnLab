@@ -50,3 +50,28 @@ def book_delete(request, pk):
         book.delete()
         return redirect('book_list')
     return render(request, 'bookshelf/book_confirm_delete.html', {'book': book})
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Book
+from .forms import BookForm
+from django.contrib.auth.decorators import login_required
+
+# Safe ORM usage
+@login_required
+def search_books(request):
+    query = request.GET.get('q', '')
+    # Use Django ORM filtering (parameterized queries) instead of raw SQL
+    books = Book.objects.filter(title__icontains=query)
+    return render(request, 'bookshelf/book_list.html', {'books': books, 'query': query})
+
+@login_required
+def book_create(request):
+    if request.method == 'POST':
+        form = BookForm(request.POST)
+        if form.is_valid():  # Input validation
+            book = form.save(commit=False)
+            book.added_by = request.user
+            book.save()
+            return redirect('book_list')
+    else:
+        form = BookForm()
+    return render(request, 'bookshelf/form_example.html', {'form': form})

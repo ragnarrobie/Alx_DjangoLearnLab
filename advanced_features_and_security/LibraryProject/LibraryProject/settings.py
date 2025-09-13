@@ -132,3 +132,31 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'
+
+# Enforce HTTPS for cookies
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+# HTTPS redirect
+SECURE_SSL_REDIRECT = True
+
+# HSTS (HTTP Strict Transport Security)
+SECURE_HSTS_SECONDS = 3600  # Increase in production
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# Allowed hosts
+ALLOWED_HOSTS = ['yourdomain.com']  # Update for production
+
+# Content Security Policy (CSP)
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    # ... other middlewares ...
+    'csp.middleware.CSPMiddleware',  # if using django-csp
+]
+CSP_DEFAULT_SRC = ("'self'",)
+CSP_STYLE_SRC = ("'self'", "'unsafe-inline'")
+CSP_SCRIPT_SRC = ("'self'",)
