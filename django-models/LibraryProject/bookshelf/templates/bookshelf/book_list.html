@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Book List</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+  </head>
+  <body>
+    <h1>Books</h1>
+
+    <!-- Search form -->
+    <form method="get" action="{% url 'book_list' %}">
+      <input
+        type="text"
+        name="q"
+        placeholder="Search books..."
+        value="{{ request.GET.q }}"
+      />
+      <button type="submit">Search</button>
+    </form>
+
+    <!-- Book Table -->
+    {% if books %}
+    <table border="1" cellpadding="5" cellspacing="0">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Published Date</th>
+          <th>Added By</th>
+        </tr>
+      </thead>
+    </table>
+  </body>
+</html>
