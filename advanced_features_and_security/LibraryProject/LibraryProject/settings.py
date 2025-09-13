@@ -121,7 +121,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 # Add this at the bottom or where AUTH_USER_MODEL is defined
-AUTH_USER_MODEL = 'accounts.CustomUser'
+AUTH_USER_MODEL = 'bookshelf.CustomUser'
 
 # If using media files (for profile_photo)
 MEDIA_URL = '/media/'
