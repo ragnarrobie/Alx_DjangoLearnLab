@@ -160,3 +160,36 @@ MIDDLEWARE = [
 CSP_DEFAULT_SRC = ("'self'",)
 CSP_STYLE_SRC = ("'self'", "'unsafe-inline'")
 CSP_SCRIPT_SRC = ("'self'",)
+# -------------------------------
+# HTTPS and Security Settings
+# -------------------------------
+
+# Redirect all HTTP requests to HTTPS
+SECURE_SSL_REDIRECT = True
+
+# HTTP Strict Transport Security (HSTS)
+# Instruct browsers to access the site only via HTTPS
+SECURE_HSTS_SECONDS = 31536000  # 1 year in seconds
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Apply HSTS to all subdomains
+SECURE_HSTS_PRELOAD = True           # Allow site to be included in HSTS preload list
+
+# -------------------------------
+# Secure Cookies
+# -------------------------------
+# Session cookies are only sent over HTTPS
+SESSION_COOKIE_SECURE = True
+
+# CSRF cookies are only sent over HTTPS
+CSRF_COOKIE_SECURE = True
+
+# -------------------------------
+# Secure Headers
+# -------------------------------
+# Prevent clickjacking by denying framing
+X_FRAME_OPTIONS = 'DENY'
+
+# Prevent browsers from MIME-sniffing responses
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Enable browser XSS filter
+SECURE_BROWSER_XSS_FILTER = True
