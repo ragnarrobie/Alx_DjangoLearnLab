@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
+from django.contrib.auth import get_user_model
 
 # Custom User Manager
 class CustomUserManager(BaseUserManager):
@@ -35,3 +36,23 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
+User = get_user_model()
+
+class Book(models.Model):
+    title = models.CharField(max_length=200)
+    author = models.CharField(max_length=100)
+    published_date = models.DateField(null=True, blank=True)
+    added_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='books')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        permissions = [
+            ("can_view", "Can view book"),
+            ("can_create", "Can create book"),
+            ("can_edit", "Can edit book"),
+            ("can_delete", "Can delete book"),
+        ]
+
+    def __str__(self):
+        return self.title
