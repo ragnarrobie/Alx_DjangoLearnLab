@@ -21,3 +21,15 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['bio', 'avatar']  # include avatar only if ImageField is used
+from django import forms
+from .models import Post
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['title', 'content', 'image']  # author handled in view
+        widgets = {
+            'title': forms.TextInput(attrs={'placeholder': 'Post title'}),
+            'content': forms.Textarea(attrs={'rows': 8, 'placeholder': 'Write your content here...'}),
+        }
+

@@ -26,3 +26,17 @@ urlpatterns = [
     # (Optional) homepage or blog index
     # path('', views.home, name='home'),
 ]
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    # authentication & profile routes (if present)
+    # path('register/', views.register, name='register'), etc.
+
+    # Blog post CRUD routes
+    path('posts/', views.PostListView.as_view(), name='post-list'),
+    path('posts/new/', views.PostCreateView.as_view(), name='post-create'),
+    path('posts/<int:pk>/', views.PostDetailView.as_view(), name='post-detail'),
+    path('posts/<int:pk>/edit/', views.PostUpdateView.as_view(), name='post-update'),
+    path('posts/<int:pk>/delete/', views.PostDeleteView.as_view(), name='post-delete'),
+]
