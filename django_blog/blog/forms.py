@@ -62,25 +62,13 @@ class PostForm(forms.ModelForm):
         }
 from django import forms
 from .models import Post
-from taggit.forms import TagWidget  # import TagWidget from django-taggit
+from taggit.forms import TagWidget
 
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ['title', 'content', 'tags']
         widgets = {
-            'title': forms.TextInput(attrs={'placeholder': 'Enter post title'}),
-            'content': forms.Textarea(attrs={'rows': 8, 'placeholder': 'Write your content...'}),
-            'tags': TagWidget(attrs={'placeholder': 'Add tags separated by commas'}),  # TagWidget here
-        }
-from django import forms
-from .models import Post
-
-class PostForm(forms.ModelForm):
-    class Meta:
-        model = Post
-        fields = ['title', 'content', 'tags'] # 'tags' is automatically handled by django-taggit
-        widgets = {
-            # This just adds a placeholder to the default text input for tags
-            'tags': forms.TextInput(attrs={'placeholder': 'Comma-separated tags'}),
+            'content': forms.Textarea(attrs={'rows': 4}),
+            'tags': TagWidget(),
         }
