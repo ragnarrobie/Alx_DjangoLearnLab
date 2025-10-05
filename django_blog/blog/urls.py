@@ -94,6 +94,6 @@ from . import views
 
 urlpatterns = [
 
-    path('tags/<slug:tag_slug>/', views.PostsByTagListView.as_view(), name='posts-by-tag'),
+    path('tags/<slug:tag_slug>/', views.PostByTagListView.as_view(), name='posts-by-tag'),
 ]
 
