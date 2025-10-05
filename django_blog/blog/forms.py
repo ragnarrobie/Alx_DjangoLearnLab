@@ -47,3 +47,16 @@ class PostForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'placeholder': 'Post title'}),
             'content': forms.Textarea(attrs={'rows': 8, 'placeholder': 'Write your content...'}),
         }
+from django import forms
+from .models import Post
+from taggit.forms import TagWidget  # import the widget from django-taggit
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['title', 'content', 'tags']
+        widgets = {
+            'title': forms.TextInput(attrs={'placeholder': 'Post title'}),
+            'content': forms.Textarea(attrs={'rows': 8, 'placeholder': 'Write your content...'}),
+            'tags': TagWidget(attrs={'placeholder': 'Add tags separated by commas'}),
+        }
