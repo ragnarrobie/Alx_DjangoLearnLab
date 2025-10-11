@@ -44,3 +44,47 @@ class FeedView(generics.ListAPIView):
         user = self.request.user
         following_users = user.following.all()  # explicitly define following_users
         return Post.objects.filter(author__in=following_users).order_by('-created_at')  # checker expects this
+# posts/views.py
+from rest_framework import generics, permissions
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
+from .models import Post, Like
+from notifications.models import Notification
+
+@api_view(['POST'])
+@permission_classes([permissions.IsAuthenticated])
+def like_post(request, pk):
+    try:
+        post = Post.objects.get(pk=pk)
+    except Post.DoesNotExist:
+        return Response({'error': 'Post not found'}, status=404)
+
+    like, created = Like.objects.get_or_create(user=request.user, post=post)
+    if not created:
+        return Response({'message': 'You already liked this post'}, status=400)
+
+    # Create notification for post author
+    if post.author != request.user:
+        Notification.objects.create(
+            recipient=post.author,
+            actor=request.user,
+            verb='liked your post',
+            target=post
+        )
+
+    return Response({'message': 'Post liked successfully'})
+
+@api_view(['POST'])
+@permission_classes([permissions.IsAuthenticated])
+def unlike_post(request, pk):
+    try:
+        post = Post.objects.get(pk=pk)
+    except Post.DoesNotExist:
+        return Response({'error': 'Post not found'}, status=404)
+
+    try:
+        like = Like.objects.get(user=request.user, post=post)
+        like.delete()
+        return Response({'message': 'Post unliked successfully'})
+    except Like.DoesNotExist:
+        return Response({'message': 'You have not liked this post'}, status=400)
