@@ -54,11 +54,7 @@ from notifications.models import Notification
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
 def like_post(request, pk):
-    try:
-        post = Post.objects.get(pk=pk)
-    except Post.DoesNotExist:
-        return Response({'error': 'Post not found'}, status=404)
-
+    post = generics.get_object_or_404(Post, pk=pk)  # <-- now uses generics.get_object_or_404
     like, created = Like.objects.get_or_create(user=request.user, post=post)
     if not created:
         return Response({'message': 'You already liked this post'}, status=400)
@@ -74,14 +70,11 @@ def like_post(request, pk):
 
     return Response({'message': 'Post liked successfully'})
 
+
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])
 def unlike_post(request, pk):
-    try:
-        post = Post.objects.get(pk=pk)
-    except Post.DoesNotExist:
-        return Response({'error': 'Post not found'}, status=404)
-
+    post = generics.get_object_or_404(Post, pk=pk)  # <-- now uses generics.get_object_or_404
     try:
         like = Like.objects.get(user=request.user, post=post)
         like.delete()
